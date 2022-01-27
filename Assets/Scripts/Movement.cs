@@ -4,54 +4,149 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [Header("Body")]
+    public Transform back;
+    public Transform front;
+    public float forwardSpeed = 5f;
+    public float turningTorque = 50f;
+    public float maxSpeed = 1f;
+
+    Rigidbody rb;
+    Rigidbody backRb;
+
+    [Header("Front Legs")]
+    public Transform rightLeg;
+    public Transform leftLeg;
+    public Transform rightRest, leftRest;
+    public Transform rightWalk, leftWalk;
+    public float distanceBetweenStep = 0.2f;
+    public float minStepSpeed = 0.05f;
+    float accumulatedDistance = 0;
+
+    [Header("Head and camera")]
+    public float timeUntilCameraFix = 0.5f;
+    float lastCameraMovement = 0;
+    float timeBodyMoving = 0;
+
     public Transform neck;
     public Transform head;
 
-    public Transform back;
-
     public float headTurningSpeed = 1f;
-
-    Rigidbody rb;
 
     float headYaw = 0;
     float headPitch = 0;
 
     float neckYaw = 0;
     float neckPitch = 0;
+    float neutralHeadPitch, neutralNeckPitch;
 
     public Vector2 minMaxYawDifference = new Vector2(-25f, 25f);
     public Vector2 minMaxNeckYaw = new Vector2(-30f, 30f);
 
-
     public Vector2 minMaxPitchDifference = new Vector2(-25f, 25f);
     public Vector2 minMaxNeckPitch = new Vector2(-30f, 30f);
+
+    Vector3 startPosition;
+    Quaternion startRotation;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        backRb = back.GetComponent<Rigidbody>();
 
-        neckPitch = Vector3.SignedAngle(Vector3.forward, neck.forward, neck.right);
-        Debug.Log(neckPitch);
+        neutralNeckPitch = Vector3.SignedAngle(transform.forward, neck.forward, neck.right);
+        neutralHeadPitch = Vector3.SignedAngle(neck.forward, head.forward, neck.right);
+        lastFrontPos = front.position;
+
+        startPosition = backRb.transform.position;
+        startRotation = backRb.transform.rotation;
     }
+
+    Vector3 lastFrontPos = Vector3.zero;
 
     // Update is called once per frame
     void Update()
     {
-        MoveHead(out float wantedExtraMouseYaw);
+        if (Cursor.lockState != CursorLockMode.Locked && Input.GetMouseButtonDown(0))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else if (Cursor.lockState == CursorLockMode.Locked && Input.GetKeyDown(KeyCode.Escape)) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
 
+
+        if (Cursor.lockState == CursorLockMode.Locked)
+            MoveHead(out float wantedExtraMouseYaw);
 
         // TODO do something with yawdelta to tilt the body on that direction
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            rb.position = startPosition;
+            rb.rotation = startRotation;
+        }
+
+        //
+        float movingFactor = Mathf.Clamp01(Vector3.Dot(front.forward, backRb.velocity) / maxSpeed);
+        if (!Mathf.Approximately(movingFactor, 0) && timeBodyMoving > timeUntilCameraFix && Time.time - lastCameraMovement > timeUntilCameraFix)
+        {
+            headPitch = Mathf.MoveTowardsAngle(headPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+            headYaw = Mathf.MoveTowardsAngle(headYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+            neckPitch = Mathf.MoveTowardsAngle(neckPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+            neckYaw = Mathf.MoveTowardsAngle(neckYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        MoveBody();
+
+        Vector3 deltaPosFront = front.position - lastFrontPos;
+        float frameMovement = deltaPosFront.magnitude;
+
+        float frontSpeed = frameMovement / Time.fixedDeltaTime;
+
+        if (frontSpeed > minStepSpeed)
+        {
+            accumulatedDistance += frameMovement;
+
+            bool left = (accumulatedDistance / distanceBetweenStep) % 2f >= 1f;
+
+            leftLeg.rotation = left ? leftRest.rotation : leftWalk.rotation;
+            leftLeg.position = left ? leftRest.position : leftWalk.position;
+
+            rightLeg.rotation = !left ? rightRest.rotation : rightWalk.rotation;
+            rightLeg.position = !left ? rightRest.position : rightWalk.position;
+        }
+        else
+        {
+            leftLeg.rotation = leftRest.rotation;
+            leftLeg.position = leftRest.position;
+
+            rightLeg.rotation = rightRest.rotation;
+            rightLeg.position = rightRest.position;
+        }
+
+        lastFrontPos = front.position;
     }
 
     void MoveHead(out float wantToRotateMore) {
         float hAxis = Input.GetAxis("Mouse X");
         float vAxis = Input.GetAxis("Mouse Y");
 
+        if (!Mathf.Approximately(Mathf.Abs(hAxis) + Mathf.Abs(vAxis), 0f)) {
+            lastCameraMovement = Time.time;
+        }
+
         float dt = Mathf.Min(1 / 24f, Time.deltaTime);
 
         float yawDelta = hAxis * headTurningSpeed * dt;
         float pitchDelta = -vAxis * headTurningSpeed * dt;
+
 
         // Yaw
         if (yawDelta > 0)
@@ -79,6 +174,9 @@ public class Movement : MonoBehaviour
                 {
                     yawDelta -= minMaxNeckYaw.y - neckYaw;
                     neckYaw = minMaxNeckYaw.y;
+
+                    float pitchFactor = Mathf.Clamp01((neckPitch + headPitch) / minMaxNeckPitch.x);
+                    pitchDelta += (neckPitch + headPitch < 0) ? Mathf.Abs(yawDelta * pitchFactor) : -Mathf.Abs(yawDelta * pitchFactor);
                 }
             }
         }
@@ -106,8 +204,11 @@ public class Movement : MonoBehaviour
                 }
                 else
                 {
-                    yawDelta -= minMaxYawDifference.x - neckYaw;
+                    yawDelta -= minMaxNeckYaw.x - neckYaw;
                     neckYaw = minMaxNeckYaw.x;
+
+                    float pitchFactor = Mathf.Clamp01((neckPitch + headPitch) / minMaxNeckPitch.y);
+                    pitchDelta += (neckPitch + headPitch < 0) ? Mathf.Abs(yawDelta * pitchFactor) : -Mathf.Abs(yawDelta * pitchFactor);
                 }
             }
         }
@@ -129,7 +230,6 @@ public class Movement : MonoBehaviour
             {
                 pitchDelta -= minMaxPitchDifference.y - headPitch;
                 headPitch = minMaxPitchDifference.y;
-                Debug.Log("Positive, head at max");
 
                 if (neckPitch + pitchDelta < minMaxNeckPitch.y)
                 {
@@ -178,10 +278,51 @@ public class Movement : MonoBehaviour
 
 
 
-        neck.localRotation = Quaternion.Euler(neckPitch, neckYaw, 0);
-        head.localRotation = Quaternion.Euler(headPitch, headYaw, 0);
+        neck.localRotation = Quaternion.Euler(neckPitch + neutralNeckPitch, neckYaw, 0);
+        //head.localRotation = Quaternion.Euler(headPitch + neutralHeadPitch, headYaw, 0);
+
+        //neck.localRotation = Quaternion.AngleAxis(neckPitch + neutralNeckPitch, Vector3.right) * Quaternion.AngleAxis(neckYaw, Vector3.up);
+        head.localRotation = Quaternion.AngleAxis(headPitch + neutralHeadPitch, Vector3.right) * Quaternion.AngleAxis(headYaw, Vector3.up);
 
         wantToRotateMore = yawDelta;
+    }
+
+    void MoveBody() {
+        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+
+        backRb.AddRelativeTorque(Vector3.up * horizontal * turningTorque, ForceMode.Acceleration);
+        //backRb.AddForceAtPosition(front.right * horizontal * speed, front.position + Vector3.up * 0f, ForceMode.Acceleration);
+        backRb.AddForceAtPosition(front.forward * vertical * (vertical > 0? forwardSpeed : forwardSpeed * 0.5f), front.position, ForceMode.Acceleration);
+        //rb.AddForceAtPosition(transform.right * horizontal * speed, transform.position + Vector3.up * 0.35f, ForceMode.Acceleration);
+
+        float velMagnitude = backRb.velocity.magnitude;
+        if (velMagnitude > maxSpeed)
+        {
+            backRb.velocity = backRb.velocity.normalized * maxSpeed;
+            velMagnitude = maxSpeed;
+        }
+        float angularMagnitude = backRb.angularVelocity.magnitude;
+        if (angularMagnitude > maxSpeed)
+        {
+            backRb.angularVelocity = backRb.angularVelocity.normalized * maxSpeed;
+            angularMagnitude = maxSpeed;
+        }
+
+        if (!Mathf.Approximately(Vector3.Dot(front.forward, backRb.velocity), 0f))
+        {
+            timeBodyMoving += Time.fixedDeltaTime;
+        }
+        else timeBodyMoving = 0f;
+
+        Quaternion wantedRotation = Quaternion.FromToRotation(back.up, Vector3.up);
+
+        Vector3 x = Vector3.Cross(back.up, Vector3.up);
+        float theta = Mathf.Asin(x.magnitude);
+        Vector3 w = x.normalized * theta / Time.fixedDeltaTime;
+        Quaternion q = transform.rotation * backRb.inertiaTensorRotation;
+        Vector3 T = q * Vector3.Scale(backRb.inertiaTensor, (Quaternion.Inverse(q) * w));
+        backRb.AddTorque(T, ForceMode.Impulse);
     }
 
     private void OnDrawGizmosSelected()
