@@ -15,13 +15,22 @@ public class Movement : MonoBehaviour
     Rigidbody backRb;
 
     [Header("Front Legs")]
-    public Transform rightLeg;
-    public Transform leftLeg;
+    public Rigidbody rightLeg;
+    public Rigidbody leftLeg;
     public Transform rightRest, leftRest;
     public Transform rightWalk, leftWalk;
     public float distanceBetweenStep = 0.2f;
     public float minStepSpeed = 0.05f;
+    public float feetSpeed = 1f;
+    public float feetRotationSpeed = 90f;
     float accumulatedDistance = 0;
+
+    Transform targetRight;
+    Transform prevRight;
+    Transform targetLeft;
+    Transform prevLeft;
+    float movingTimeLeft, movingTimeRight;
+    float moveTimeL, moveTimeR;
 
     [Header("Head and camera")]
     public float timeUntilCameraFix = 0.5f;
@@ -61,6 +70,9 @@ public class Movement : MonoBehaviour
 
         startPosition = backRb.transform.position;
         startRotation = backRb.transform.rotation;
+
+        targetLeft = leftRest;
+        targetRight = rightRest;
     }
 
     Vector3 lastFrontPos = Vector3.zero;
@@ -116,22 +128,71 @@ public class Movement : MonoBehaviour
 
             bool left = (accumulatedDistance / distanceBetweenStep) % 2f >= 1f;
 
-            leftLeg.rotation = left ? leftRest.rotation : leftWalk.rotation;
-            leftLeg.position = left ? leftRest.position : leftWalk.position;
-
-            rightLeg.rotation = !left ? rightRest.rotation : rightWalk.rotation;
-            rightLeg.position = !left ? rightRest.position : rightWalk.position;
+            MoveFeet(true, left ? leftRest : leftWalk, feetSpeed);
+            MoveFeet(false, left ? rightWalk : rightRest, feetSpeed);
         }
         else
         {
-            leftLeg.rotation = leftRest.rotation;
-            leftLeg.position = leftRest.position;
-
-            rightLeg.rotation = rightRest.rotation;
-            rightLeg.position = rightRest.position;
+            MoveFeet(true, leftRest, feetSpeed);
+            MoveFeet(false, rightRest, feetSpeed);
         }
 
         lastFrontPos = front.position;
+
+        //
+        if (movingTimeLeft > 0)
+        {
+            movingTimeLeft = Mathf.Max(0, movingTimeLeft - Time.fixedDeltaTime);
+            float leftFactor = 1f - (movingTimeLeft / moveTimeL);
+            leftFactor = Easing.Cubic.Out(leftFactor);
+
+            leftLeg.MovePosition(Vector3.Lerp(prevLeft.position, targetLeft.position, leftFactor));
+            leftLeg.MoveRotation(Quaternion.Slerp(prevLeft.rotation, targetLeft.rotation, leftFactor));
+        }
+        else {
+            leftLeg.MovePosition(targetLeft.position);
+            leftLeg.MoveRotation(targetLeft.rotation);
+        }
+
+        if (movingTimeRight > 0)
+        {
+            movingTimeRight = Mathf.Max(0, movingTimeRight - Time.fixedDeltaTime);
+            float rightFactor = 1f - (movingTimeRight / moveTimeR);
+            rightFactor = Easing.Cubic.Out(rightFactor);
+
+            rightLeg.MovePosition(Vector3.Lerp(prevRight.position, targetRight.position, rightFactor));
+            rightLeg.MoveRotation(Quaternion.Slerp(prevRight.rotation, targetRight.rotation, rightFactor));
+        }
+        else
+        {
+            rightLeg.MovePosition(targetRight.position);
+            rightLeg.MoveRotation(targetRight.rotation);
+        }
+    }
+
+    void MoveFeet(bool left, Transform where, float speed) {
+        if (left && where == targetLeft)
+            return;
+        if (!left && where == targetRight)
+            return;
+
+        if (left)
+        {
+            prevLeft = targetLeft;
+            targetLeft = where;
+            float time = Vector3.Distance(targetLeft.position, leftLeg.position) / speed;
+            float timeRotation = Quaternion.Angle(targetLeft.rotation, leftLeg.rotation) / (speed * feetRotationSpeed);
+            movingTimeLeft = Mathf.Max(timeRotation, time);
+            moveTimeL = movingTimeLeft;
+        }
+        else {
+            prevRight = targetRight;
+            targetRight = where;
+            float time = Vector3.Distance(targetRight.position, rightLeg.position) / speed;
+            float timeRotation = Quaternion.Angle(targetRight.rotation, rightLeg.rotation) / (speed * feetRotationSpeed);
+            movingTimeRight = Mathf.Max(timeRotation, time);
+            moveTimeR = movingTimeRight;
+        }
     }
 
     void MoveHead(out float wantToRotateMore) {
@@ -291,7 +352,7 @@ public class Movement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        backRb.AddRelativeTorque(Vector3.up * horizontal * turningTorque, ForceMode.Acceleration);
+        backRb.AddRelativeTorque(Vector3.up * (vertical < 0? -horizontal : horizontal) * turningTorque, ForceMode.Acceleration);
         //backRb.AddForceAtPosition(front.right * horizontal * speed, front.position + Vector3.up * 0f, ForceMode.Acceleration);
         backRb.AddForceAtPosition(front.forward * vertical * (vertical > 0? forwardSpeed : forwardSpeed * 0.5f), front.position, ForceMode.Acceleration);
         //rb.AddForceAtPosition(transform.right * horizontal * speed, transform.position + Vector3.up * 0.35f, ForceMode.Acceleration);
