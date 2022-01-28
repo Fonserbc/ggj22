@@ -106,9 +106,9 @@ public class Movement : MonoBehaviour
         float movingFactor = Mathf.Clamp01(Vector3.Dot(front.forward, backRb.velocity) / maxSpeed);
         if (!Mathf.Approximately(movingFactor, 0) && timeBodyMoving > timeUntilCameraFix && Time.time - lastCameraMovement > timeUntilCameraFix)
         {
-            headPitch = Mathf.MoveTowardsAngle(headPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+            if (headPitch < 0) headPitch = Mathf.MoveTowardsAngle(headPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
             headYaw = Mathf.MoveTowardsAngle(headYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
-            neckPitch = Mathf.MoveTowardsAngle(neckPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+            if (neckPitch < 0) neckPitch = Mathf.MoveTowardsAngle(neckPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
             neckYaw = Mathf.MoveTowardsAngle(neckYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
         }
     }
