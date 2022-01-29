@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [Header("Interaction")]
+    public Transform rightTouch;
+    public Transform leftTouch;
+    bool touchingLeft = false;
+    bool touchingRight = false;
+
     [Header("Body")]
     public Transform back;
     public Transform front;
@@ -98,9 +104,25 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            rb.position = startPosition;
-            rb.rotation = startRotation;
+            backRb.position = startPosition;
+            backRb.rotation = startRotation;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            touchingLeft = true;
+            touchingRight = false;
+        }
+        else if (touchingLeft && Input.GetMouseButtonUp(0))
+            touchingLeft = false;
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            touchingLeft = false;
+            touchingRight = true;
+        }
+        else if (touchingRight && Input.GetMouseButtonUp(1))
+            touchingRight = false;
 
         //
         float movingFactor = Mathf.Clamp01(Vector3.Dot(front.forward, backRb.velocity) / maxSpeed);
@@ -133,8 +155,11 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            MoveFeet(true, leftRest, feetSpeed);
-            MoveFeet(false, rightRest, feetSpeed);
+            if (touchingLeft) MoveFeet(true, leftTouch, feetSpeed);
+            else MoveFeet(true, leftRest, feetSpeed);
+
+            if (touchingRight) MoveFeet(false, rightTouch, feetSpeed);
+            else MoveFeet(false, rightRest, feetSpeed);
         }
 
         lastFrontPos = front.position;
