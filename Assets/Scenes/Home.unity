@@ -1795,9 +1795,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dog
       objectReference: {fileID: 0}
-    - target: {fileID: 3236188577716575902, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
-      propertyPath: headTurningSpeed
-      value: 350
+    - target: {fileID: 5064797251659527341, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
+      propertyPath: grabSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064797251659527341, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
+      propertyPath: rotationGrabSpeedMult
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
