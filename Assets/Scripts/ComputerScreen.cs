@@ -12,15 +12,12 @@ public class ComputerScreen : MonoBehaviour
     float accTime = 0;
     int it = 0;
 
-    public MeshRenderer[] renderers;
-
     MaterialPropertyBlock block;
 
     // Start is called before the first frame update
     void Start()
     {
         block = new MaterialPropertyBlock();
-        renderers[0].GetPropertyBlock(block);
 
         SetTexture(animation[it]);
     }
@@ -40,10 +37,11 @@ public class ComputerScreen : MonoBehaviour
 
     void SetTexture(Texture2D tex)
     {
-        block.SetTexture("_MainTex", tex);
-        foreach (Renderer rend in renderers)
+        foreach (WannabeScreen s in WannabeScreen.screens)
         {
-            rend.SetPropertyBlock(block);
+            s.rend.GetPropertyBlock(block);
+            block.SetTexture("_MainTex", tex);
+            s.rend.SetPropertyBlock(block);
         }
     }
 }

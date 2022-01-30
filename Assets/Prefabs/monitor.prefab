@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1933275494473753903}
   - component: {fileID: 1293945498501812330}
   - component: {fileID: 4869228958057779638}
+  - component: {fileID: 7528541451155136344}
   m_Layer: 0
   m_Name: screen
   m_TagString: Untagged
@@ -95,6 +96,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.96, y: 0.57, z: 0.035}
   m_Center: {x: 0, y: 0, z: -0.001}
+--- !u!114 &7528541451155136344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1326773221033289562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5759ec48de7a0445a1f5b0c96c3c1ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rend: {fileID: 0}
 --- !u!1 &4115115030332343200
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +230,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5716070825921501536}
-  m_LocalRotation: {x: -0, y: -0.9998644, z: -0, w: 0.016469603}
+  m_LocalRotation: {x: 0, y: -0.99986446, z: 0, w: 0.016466517}
   m_LocalPosition: {x: 0.204, y: 0.735, z: 2.176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

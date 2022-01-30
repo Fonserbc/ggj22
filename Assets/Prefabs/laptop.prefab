@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1235763375828514351}
   - component: {fileID: 1389564073377904799}
   - component: {fileID: 1759186080326503898}
-  - component: {fileID: 5336236728024919649}
+  - component: {fileID: 1802345326483859323}
   m_Layer: 0
   m_Name: screen
   m_TagString: Untagged
@@ -82,7 +82,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5336236728024919649
+--- !u!114 &1802345326483859323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,38 +91,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2014590965434972906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d690d49f66e64ef996e950b317c76bb, type: 3}
+  m_Script: {fileID: 11500000, guid: f5759ec48de7a0445a1f5b0c96c3c1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation:
-  - {fileID: 2800000, guid: 2cfe0cc733ec248ef93c3e021ece9be0, type: 3}
-  - {fileID: 2800000, guid: 8b12ac5509a704d0ca643d196fabaa8c, type: 3}
-  - {fileID: 2800000, guid: 11c36d55f81de4145858d99a4d05e896, type: 3}
-  - {fileID: 2800000, guid: d2c4e8a343a6b4e5bbe531269ed71ac3, type: 3}
-  - {fileID: 2800000, guid: 00f62ff60ce704690978827b80139c64, type: 3}
-  - {fileID: 2800000, guid: 38cd9a5934ccf461d8cf093f0cc2f6e1, type: 3}
-  - {fileID: 2800000, guid: 7572d24272fe74e5a86611a0c8837e96, type: 3}
-  - {fileID: 2800000, guid: 0df17a1d798bb4687ab257dbc16ca08d, type: 3}
-  - {fileID: 2800000, guid: 9d334e7fe9fb8432bbc5130c7b602d9c, type: 3}
-  - {fileID: 2800000, guid: ae17a146f1fa94cf3a4b60244dfa3cdd, type: 3}
-  - {fileID: 2800000, guid: 3a0b0482951f64e2e8776642ee2e33c4, type: 3}
-  - {fileID: 2800000, guid: 337e6cbfbdf234f6e8e253aff6620c62, type: 3}
-  - {fileID: 2800000, guid: 3379ef796feea45deb7b3b91c516daf0, type: 3}
-  - {fileID: 2800000, guid: 8776b85c5c7634b12babe6e39e8d380c, type: 3}
-  - {fileID: 2800000, guid: b4b5a69dab8f34e249d022a205cae13f, type: 3}
-  - {fileID: 2800000, guid: dddf83500648845128249964a6554abb, type: 3}
-  - {fileID: 2800000, guid: 655ebffd105b8479cb8dab912494090d, type: 3}
-  - {fileID: 2800000, guid: aee6b9c916f5145ea96dfd6fc0cfe56c, type: 3}
-  - {fileID: 2800000, guid: dc93c1eee36fa4487a72e5ce0ee2f9d8, type: 3}
-  - {fileID: 2800000, guid: b43c334d26ab44ac3bc9edfa08da7498, type: 3}
-  - {fileID: 2800000, guid: 10c03f36e78314322b0503e97344ffb5, type: 3}
-  - {fileID: 2800000, guid: 2a5034eaf5142434cba6bc154e03cd27, type: 3}
-  - {fileID: 2800000, guid: 66d2de94a5b21459b94a10953621ebd1, type: 3}
-  - {fileID: 2800000, guid: 5f8355ce9b7584420a25aa63faf96bfd, type: 3}
-  imagesPerSecond: 12
-  renderers:
-  - {fileID: 0}
-  - {fileID: 1759186080326503898}
+  rend: {fileID: 0}
 --- !u!1 &5102427580254946512
 GameObject:
   m_ObjectHideFlags: 0
