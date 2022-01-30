@@ -81,6 +81,10 @@ public class Mouth : MonoBehaviour
         }
     }
 
+    public bool IsBittingSomething() {
+        return currentlyBiting != null;
+    }
+
     void Bite(Biteable b)
     {
         currentlyBiting = b;

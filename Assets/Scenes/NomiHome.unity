@@ -5434,14 +5434,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dog
       objectReference: {fileID: 0}
-    - target: {fileID: 2435886245560404676, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: db2906b33b138ee409c88dd781ed0ca9, type: 2}
-    - target: {fileID: 3236188577716575902, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
-      propertyPath: headTurningSpeed
-      value: 350
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
 --- !u!1001 &3578575349741811711

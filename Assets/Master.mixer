@@ -57,6 +57,25 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &-6129571851143496777
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Cheddar
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 29887b4d90f23db40b5f7a99e011eda8
+  m_Children: []
+  m_Volume: 9ec7b5b1ba4d11f4386a884ccb36c106
+  m_Pitch: cee7b95f4a6b0fb45937a131a94a02c9
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 5954622643737663966}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-5018421779128490466
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -99,6 +118,7 @@ AudioMixerController:
     - 2f4b02f73d14a4935b823be3f46aeff5
     - 3481b75b434f0404db72451dfbe9e07f
     - f7baf79930558bf49acbae1de193ccfb
+    - 29887b4d90f23db40b5f7a99e011eda8
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -115,6 +135,7 @@ AudioMixerGroupController:
   - {fileID: -7171697974379637274}
   - {fileID: -5018421779128490466}
   - {fileID: -7361275960504605818}
+  - {fileID: -6129571851143496777}
   m_Volume: 617b68107ad7f43c29afda3ad38bd7bb
   m_Pitch: a60f33378a007431bb84552313e2aa14
   m_Send: 00000000000000000000000000000000
@@ -169,6 +190,20 @@ AudioMixerEffectController:
     m_GUID: 16b7a930a1dcd664fbc2ce512aa78664
   - m_ParameterName: Resonance
     m_GUID: d7a7299091650db4aa7fe90745490eda
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &5954622643737663966
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 6bf117dbc43aad7408f1ef42cf140fb3
+  m_EffectName: Attenuation
+  m_MixLevel: 7f75eb221f6a97c44b9abba4edd70315
+  m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
