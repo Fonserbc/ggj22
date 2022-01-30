@@ -21,7 +21,29 @@ public class Mac : MonoBehaviour
     {
         if (transform.position.y < -10f) {
             onWin.SetActive(true);
-            Debug.Log("Win");
+            enabled = false;
+        }
+
+        if (hitTime > 0)
+        {
+            hitTime -= Time.deltaTime;
+
+            if (hitTime <= 0)
+            {
+                rb.centerOfMass = centerOfMass.localPosition;
+            }
+        }
+    }
+
+    float hitTime = 0f;
+
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player")) {
+            rb.centerOfMass = Vector3.zero;
+            hitTime = 1f;
         }
     }
 }
