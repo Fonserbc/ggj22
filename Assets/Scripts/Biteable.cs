@@ -61,7 +61,7 @@ public class Biteable : MonoBehaviour
         {
             consecutiveBites++;
 
-            if (consecutiveBites >= eatenBiteCount)
+            if (eatable && consecutiveBites >= eatenBiteCount)
             {
                 Eat();
             }
