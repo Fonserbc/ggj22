@@ -130,3 +130,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relPos: {x: 0, y: 0.062, z: 0.099}
   relRot: {x: 0, y: 0.88866526, z: -0.45855644, w: 0}
+  eatable: 1
+  rb: {fileID: 0}
+  eatenBiteCount: 10
