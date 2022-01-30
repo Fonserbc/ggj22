@@ -7,12 +7,18 @@ public class Biteable : MonoBehaviour
     public Vector3 relPos;
     public Quaternion relRot;
 
-    Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
     Transform oldParent;
+
+    float mass;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (rb == null)
+            rb = gameObject.AddComponent<Rigidbody>();
+        mass = rb.mass;
         oldParent = transform.parent;
     }
 
@@ -38,10 +44,37 @@ public class Biteable : MonoBehaviour
     }
 
     public void Grab() {
-
+        rb.isKinematic = true;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        SetLayerRecursive(transform, 7);
     }
 
-    public void Release() {
+    public void FixTo(Transform p)
+    {
+        transform.SetParent(p);
+        transform.localPosition = relPos;
+        transform.localRotation = relRot;
+        DestroyImmediate(rb);
+    }
 
+    public void Release()
+    {
+        if (rb == null) {
+            rb = gameObject.AddComponent<Rigidbody>();
+            rb.mass = mass;
+        }
+        rb.isKinematic = false;
+        transform.SetParent(oldParent);
+        SetLayerRecursive(transform, 0);
+    }
+
+    void SetLayerRecursive(Transform t, int layer)
+    {
+        t.gameObject.layer = layer;
+
+        foreach (Transform c in t)
+        {
+            SetLayerRecursive(c, layer);
+        }
     }
 }
