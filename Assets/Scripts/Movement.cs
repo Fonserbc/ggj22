@@ -104,8 +104,10 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            backRb.position = startPosition;
-            backRb.rotation = startRotation;
+            //backRb.position = startPosition;
+            //backRb.rotation = startRotation;
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
 
         if (Input.GetMouseButtonDown(0))

@@ -7,7 +7,13 @@ public class Barks : MonoBehaviour
     public Mouth mouth;
 
     public AudioClip[] barks;
-    public AudioSource source;
+    [UnityEngine.Serialization.FormerlySerializedAs("source")]
+    public AudioSource barkingSource;
+    int lastPlayedBark = -1;
+
+    public AudioSource pantingSource;
+    public AudioClip[] pants;
+    int lastPlayedPant = -1;
 
     public Transform tongue;
     public float maxTongueRotation = 75f;
@@ -15,14 +21,10 @@ public class Barks : MonoBehaviour
 
     Quaternion fromRotation, toRotation;
 
-    int lastPlayedBark = -1;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (source == null)
-            source = GetComponent<AudioSource>();
-
         originalTongueRotation = tongue.localRotation;
     }
 
@@ -44,16 +46,21 @@ public class Barks : MonoBehaviour
             Bark();
         }
 
-        if (source.isPlaying)
+        if (barkingSource.isPlaying)
         {
-            float timeFactor = source.time / barks[lastPlayedBark].length;
+            float timeFactor = barkingSource.time / barks[lastPlayedBark].length;
             tongue.localRotation = Quaternion.Lerp(fromRotation, toRotation, Easing.Back.Out(timeFactor));
+        }
+
+        if (!pantingSource.isPlaying)
+        {
+            Pant();
         }
     }
 
     public void Bark()
     {
-        if (source.isPlaying)
+        if (barkingSource.isPlaying)
             return;
 
         List<int> possibleBarks = new List<int>();
@@ -67,13 +74,34 @@ public class Barks : MonoBehaviour
 
         int chosenBark = possibleBarks[Random.Range(0, possibleBarks.Count)];
 
-        source.clip = barks[chosenBark];
+        barkingSource.clip = barks[chosenBark];
 
         lastPlayedBark = chosenBark;
-        source.Play();
+        barkingSource.Play();
 
         fromRotation = tongue.localRotation;
         toRotation = originalTongueRotation * Quaternion.AngleAxis(Random.Range(-maxTongueRotation, maxTongueRotation), Vector3.forward);
+    }
+
+    public void Pant() {
+        if (pantingSource.isPlaying)
+            return;
+
+        List<int> possiblePants = new List<int>();
+        for (int i = 0; i < pants.Length; ++i)
+        {
+            if (i != lastPlayedPant)
+            {
+                possiblePants.Add(i);
+            }
+        }
+
+        int chosenPant = possiblePants[Random.Range(0, possiblePants.Count)];
+
+        pantingSource.clip = pants[chosenPant];
+
+        lastPlayedPant = chosenPant;
+        pantingSource.Play();
     }
 
 }
