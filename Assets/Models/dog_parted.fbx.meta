@@ -3,7 +3,62 @@ guid: 72d4f1f668bef45a494f5cf35a453da4
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat
+    second: {fileID: 2100000, guid: 9d032d7428b7287499a25aaa963283db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.1
+    second: {fileID: 2100000, guid: db2906b33b138ee409c88dd781ed0ca9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.2
+    second: {fileID: 2100000, guid: 6cefd8e0d83677442831eb6b99000923, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.3
+    second: {fileID: 2100000, guid: 451d4c14d7ebdd646a13144bfd59d10b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat.4
+    second: {fileID: 2100000, guid: a38b4a8ede4a9c4488152ad271b5dec7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 6ebf55b30b1f48c4ea5d56791ba4f191, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: dog_body
+    second: {fileID: 2800000, guid: cd3726c75db6f8347a4d90359cca18ef, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: dog_frontleft
+    second: {fileID: 2800000, guid: 47d67c4b6d92c1149b89c0859d51eca2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: dog_frontright
+    second: {fileID: 2800000, guid: d133bf4655511b34483fb6de61f10981, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: dog_neckandtail
+    second: {fileID: 2800000, guid: 8576b96bca935e549962ecb88206f236, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: doghead
+    second: {fileID: 2800000, guid: 41a0ab8652f1d7e4aafd2170fb2511b8, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -85,7 +140,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0015
+    globalScale: 0.15
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
