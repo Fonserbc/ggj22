@@ -107,6 +107,9 @@ GameObject:
   - component: {fileID: 8386770273031945727}
   - component: {fileID: 7307648515516477410}
   - component: {fileID: 4836707261790691619}
+  - component: {fileID: 4132273060768925934}
+  - component: {fileID: 2044535366700206134}
+  - component: {fileID: 1839711608835704592}
   m_Layer: 0
   m_Name: Sofa_Apt_01
   m_TagString: Untagged
@@ -123,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 9063128926208519524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5000001, y: 0.5, z: 0.5000001}
   m_Children:
   - {fileID: 3137146775804220750}
   m_Father: {fileID: 0}
@@ -189,5 +192,44 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0594285, y: 0.9769529, z: 3.1901913}
-  m_Center: {x: 0.006916553, y: 0.7488381, z: 0}
+  m_Size: {x: 1.2318716, y: 0.48, z: 3.5366964}
+  m_Center: {x: 0.008042367, y: 0.51, z: 0}
+--- !u!65 &4132273060768925934
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063128926208519524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.26, y: 1.017136, z: 3.06}
+  m_Center: {x: -0.35, y: 0.7796387, z: 0}
+--- !u!65 &2044535366700206134
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063128926208519524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2318716, y: 0.72, z: 0.51}
+  m_Center: {x: 0.008042367, y: 0.69, z: -1.51}
+--- !u!65 &1839711608835704592
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063128926208519524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2318716, y: 0.72, z: 0.51}
+  m_Center: {x: 0.008042367, y: 0.69, z: 1.51}
