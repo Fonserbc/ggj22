@@ -6,6 +6,8 @@ public class Mouth : MonoBehaviour
 {
     List<Biteable> inRange = new List<Biteable>();
 
+    static Mouth instance;
+
 
     public float grabSpeed = 1f;
     public float rotationGrabSpeedMult = 120f;
@@ -17,12 +19,18 @@ public class Mouth : MonoBehaviour
 
     Biteable currentlyBiting = null;
 
+    AudioSource source;
+    int lastEatingSound = -1;
+    public AudioClip[] eatingSounds;
+
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         from = new GameObject("Mouth help from").transform;
         to = new GameObject("Mouth help to").transform;
         to.SetParent(transform);
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,6 +62,27 @@ public class Mouth : MonoBehaviour
 
             Bite(inRange[closest]);
         }
+    }
+
+    public void EatSound() {
+        if (source.isPlaying)
+            return;
+
+        List<int> possibleSounds = new List<int>();
+        for (int i = 0; i < eatingSounds.Length; ++i)
+        {
+            if (i != lastEatingSound)
+            {
+                possibleSounds.Add(i);
+            }
+        }
+
+        int chosenSound = possibleSounds[Random.Range(0, possibleSounds.Count)];
+
+        source.clip = eatingSounds[chosenSound];
+
+        lastEatingSound = chosenSound;
+        source.Play();
     }
 
     private void FixedUpdate()

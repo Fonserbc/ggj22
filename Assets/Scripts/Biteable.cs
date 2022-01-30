@@ -74,6 +74,7 @@ public class Biteable : MonoBehaviour
     void Eat() {
         DisappearAt d = gameObject.AddComponent<DisappearAt>();
         d.Goodbye(closeMouth.transform, 0.7f);
+        closeMouth.EatSound();
 
         Destroy(this);
     }
