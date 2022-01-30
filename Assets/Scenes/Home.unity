@@ -1723,10 +1723,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 319279219637817238, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1013797634609962775, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1774,18 +1770,6 @@ PrefabInstance:
     - target: {fileID: 2152800268786982449, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
       propertyPath: m_Name
       value: Dog
-      objectReference: {fileID: 0}
-    - target: {fileID: 2435886245560404676, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 6ebf55b30b1f48c4ea5d56791ba4f191, type: 2}
-    - target: {fileID: 8652780690121840758, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
-      propertyPath: m_Drag
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 8652780690121840758, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
-      propertyPath: m_AngularDrag
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d28bc843bda9345868b2f0f22cb1e4a4, type: 3}
