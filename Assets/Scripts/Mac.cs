@@ -21,6 +21,7 @@ public class Mac : MonoBehaviour
     {
         if (transform.position.y < -10f) {
             onWin.SetActive(true);
+            Debug.Log("Win");
         }
     }
 }

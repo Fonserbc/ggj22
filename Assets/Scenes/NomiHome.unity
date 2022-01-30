@@ -4507,7 +4507,7 @@ PrefabInstance:
     - target: {fileID: 1113836145374093060, guid: bfb9e78647a74d74daec45499133784e, type: 3}
       propertyPath: onWin
       value: 
-      objectReference: {fileID: 2108815651}
+      objectReference: {fileID: 1660967405}
     - target: {fileID: 1113836145374093063, guid: bfb9e78647a74d74daec45499133784e, type: 3}
       propertyPath: m_RootOrder
       value: 12
