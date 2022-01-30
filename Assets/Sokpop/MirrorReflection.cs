@@ -147,15 +147,16 @@ public class MirrorReflection : MonoBehaviour
 		reflectionCamera = null;
 
 		// Reflection render texture
-		if (!m_ReflectionTexture || m_OldReflectionTextureSize != m_TextureSize)
+		if (!m_ReflectionTexture || m_OldReflectionTextureSize != Screen.width)
 		{
 			if (m_ReflectionTexture)
 				DestroyImmediate(m_ReflectionTexture);
-			m_ReflectionTexture = new RenderTexture(m_TextureSize, m_TextureSize, 16, RenderTextureFormat.ARGB32);
+
+			m_ReflectionTexture = new RenderTexture(Screen.width, Screen.height, 16, RenderTextureFormat.ARGB32);
 			m_ReflectionTexture.name = "__MirrorReflection" + GetInstanceID();
 			m_ReflectionTexture.isPowerOfTwo = true;
 			m_ReflectionTexture.hideFlags = HideFlags.DontSave;
-			m_OldReflectionTextureSize = m_TextureSize;
+			m_OldReflectionTextureSize = Screen.width;
 		}
 
 		// Camera for reflection
