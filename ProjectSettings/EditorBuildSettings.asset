@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/NomiHome.unity
+    guid: bf3e06360251b4a9eadb46185c901f7e
   m_configObjects: {}

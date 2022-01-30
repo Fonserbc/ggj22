@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 792174956}
   m_Layer: 0
   m_Name: Mac
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -437,6 +437,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8014e9a20fc6e6b4fab46f82d533c32d, type: 3}
   source: {fileID: 792174957}
   cutPlayingClip: 1
+  minPlayingDelay: 0.4
   changePitch: 1
   pitchMinMax: {x: 0.85, y: 1.15}
 --- !u!1 &1113836146318839961

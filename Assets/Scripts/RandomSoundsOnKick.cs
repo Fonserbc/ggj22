@@ -7,7 +7,9 @@ public class RandomSoundsOnKick : MonoBehaviour
     public AudioClip[] clips;
     public AudioSource source;
     int lastPlayedClip = -1;
+    float lastPlayedTime = 0;
     public bool cutPlayingClip = true;
+    public float minPlayingDelay = 0.7f;
 
     public bool changePitch = false;
     public Vector2 pitchMinMax = Vector2.one;
@@ -20,7 +22,7 @@ public class RandomSoundsOnKick : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("Respawn"))
         {
             PlaySound();
         }
@@ -30,6 +32,13 @@ public class RandomSoundsOnKick : MonoBehaviour
     {
         if (!cutPlayingClip && source.isPlaying)
             return;
+
+        if (Time.time - lastPlayedTime < minPlayingDelay)
+            return;
+
+
+        if (source.isPlaying)
+            source.Stop();
 
         int chosenClip = 0;
 
@@ -56,5 +65,7 @@ public class RandomSoundsOnKick : MonoBehaviour
 
         lastPlayedClip = chosenClip;
         source.Play();
+
+        lastPlayedTime = Time.time;
     }
 }
