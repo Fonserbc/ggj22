@@ -67,8 +67,11 @@ public class Mouth : MonoBehaviour
                 float grabbinghFactor = 1f - (grabbingTimeLeft / grabbingTime);
                 grabbinghFactor = Easing.Cubic.Out(grabbinghFactor);
 
-                currentlyBiting.rb.MovePosition(Vector3.Lerp(from.position, to.position, grabbinghFactor));
-                currentlyBiting.rb.MoveRotation(Quaternion.Lerp(from.rotation, to.rotation, grabbinghFactor));
+                if (currentlyBiting.rb)
+                {
+                    currentlyBiting.rb.MovePosition(Vector3.Lerp(from.position, to.position, grabbinghFactor));
+                    currentlyBiting.rb.MoveRotation(Quaternion.Lerp(from.rotation, to.rotation, grabbinghFactor));
+                }
 
                 if (grabbinghFactor >= 1f)
                 {
