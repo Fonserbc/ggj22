@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2400404728525148765, guid: aae67481099e34f198771886b7d44617, type: 3}
+  - {fileID: 2100000, guid: d385fd28640497248b6e10e363c2f6dc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,3 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   relPos: {x: 0.0003, y: 0.0109, z: 0.0511}
   relRot: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  eatable: 1
+  rb: {fileID: 0}
+  eatenBiteCount: 7
