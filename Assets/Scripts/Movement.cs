@@ -377,9 +377,9 @@ public class Movement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        backRb.AddRelativeTorque(Vector3.up * (vertical < 0? -horizontal : horizontal) * turningTorque, ForceMode.Acceleration);
+        backRb.AddRelativeTorque(Vector3.up * horizontal * turningTorque * backRb.mass, ForceMode.Force);
         //backRb.AddForceAtPosition(front.right * horizontal * speed, front.position + Vector3.up * 0f, ForceMode.Acceleration);
-        backRb.AddForceAtPosition(front.forward * vertical * (vertical > 0? forwardSpeed : forwardSpeed * 0.5f), front.position, ForceMode.Acceleration);
+        backRb.AddForceAtPosition(front.forward * vertical * (vertical > 0? forwardSpeed : forwardSpeed * 0.5f) * backRb.mass, front.position, ForceMode.Force);
         //rb.AddForceAtPosition(transform.right * horizontal * speed, transform.position + Vector3.up * 0.35f, ForceMode.Acceleration);
 
         float velMagnitude = backRb.velocity.magnitude;

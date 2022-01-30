@@ -507,7 +507,7 @@ MonoBehaviour:
   back: {fileID: 1385928450}
   front: {fileID: 887044876467557922}
   forwardSpeed: 5
-  turningTorque: 50
+  turningTorque: 4
   maxSpeed: 1
   rightLeg: {fileID: 8652780690121840758}
   leftLeg: {fileID: 5474532615599747806}
