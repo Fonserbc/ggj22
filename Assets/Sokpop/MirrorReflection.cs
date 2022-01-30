@@ -152,11 +152,11 @@ public class MirrorReflection : MonoBehaviour
 			if (m_ReflectionTexture)
 				DestroyImmediate(m_ReflectionTexture);
 
-			m_ReflectionTexture = new RenderTexture(Screen.width / 2, Screen.height / 2, 16, RenderTextureFormat.ARGB32);
+			m_ReflectionTexture = new RenderTexture(Screen.width / 1, Screen.height / 1, 16, RenderTextureFormat.ARGB32);
 			m_ReflectionTexture.name = "__MirrorReflection" + GetInstanceID();
 			m_ReflectionTexture.isPowerOfTwo = true;
 			m_ReflectionTexture.hideFlags = HideFlags.DontSave;
-			m_OldReflectionTextureSize = Screen.width / 2;
+			m_OldReflectionTextureSize = Screen.width / 1;
 		}
 
 		// Camera for reflection

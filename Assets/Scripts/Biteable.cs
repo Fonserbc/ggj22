@@ -6,8 +6,10 @@ public class Biteable : MonoBehaviour
 {
     public Vector3 relPos;
     public Quaternion relRot;
+    public string what = "something";
 
     public bool eatable = true;
+    public int achievementId = -1;
 
     [HideInInspector]
     public Rigidbody rb;
@@ -76,6 +78,8 @@ public class Biteable : MonoBehaviour
         d.Goodbye(closeMouth.transform, 0.7f);
         closeMouth.EatSound();
 
+        AchievementText.instance.ReportEaten(what);
+
         Destroy(this);
     }
 
@@ -85,6 +89,8 @@ public class Biteable : MonoBehaviour
         transform.localPosition = relPos;
         transform.localRotation = relRot;
         DestroyImmediate(rb);
+
+        AchievementText.instance.ReportAchievement(achievementId);
     }
 
     public void Release()

@@ -42,6 +42,7 @@ public class Movement : MonoBehaviour
     public float timeUntilCameraFix = 0.5f;
     float lastCameraMovement = 0;
     float timeBodyMoving = 0;
+    public TMPro.TMP_Text sensitivityText;
 
     public Transform neck;
     public Transform head;
@@ -79,6 +80,16 @@ public class Movement : MonoBehaviour
 
         targetLeft = leftRest;
         targetRight = rightRest;
+
+        SetMouseSensitivity(headTurningSpeed);
+    }
+
+    void SetMouseSensitivity(float s)
+    {
+        headTurningSpeed = s;
+        sensitivityText.text = string.Format("Mouse sensitivity {0}", headTurningSpeed);
+        sensitivityText.CrossFadeAlpha(1f, 0f, false);
+        sensitivityText.CrossFadeAlpha(0, 1f, false);
     }
 
     Vector3 lastFrontPos = Vector3.zero;
@@ -96,13 +107,24 @@ public class Movement : MonoBehaviour
             Cursor.visible = true;
         }
 
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scroll > 0)
+        {
+            SetMouseSensitivity(Mathf.Min(500, headTurningSpeed + 25));
+        }
+        else if (scroll < 0)
+        {
+            SetMouseSensitivity(Mathf.Max(50, headTurningSpeed - 25));
+        }
+
 
         if (Cursor.lockState == CursorLockMode.Locked)
             MoveHead(out float wantedExtraMouseYaw);
 
         // TODO do something with yawdelta to tilt the body on that direction
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || backRb.position.y < -10f)
         {
             //backRb.position = startPosition;
             //backRb.rotation = startRotation;
@@ -152,8 +174,11 @@ public class Movement : MonoBehaviour
 
             bool left = (accumulatedDistance / distanceBetweenStep) % 2f >= 1f;
 
-            MoveFeet(true, left ? leftRest : leftWalk, feetSpeed);
-            MoveFeet(false, left ? rightWalk : rightRest, feetSpeed);
+            if (touchingLeft) MoveFeet(true, leftTouch, feetSpeed);
+            else MoveFeet(true, left ? leftRest : leftWalk, feetSpeed);
+
+            if (touchingRight) MoveFeet(false, rightTouch, feetSpeed);
+            else MoveFeet(false, left ? rightWalk : rightRest, feetSpeed);
         }
         else
         {

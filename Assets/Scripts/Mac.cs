@@ -44,6 +44,8 @@ public class Mac : MonoBehaviour
         if (collision.collider.CompareTag("Player")) {
             rb.centerOfMass = Vector3.zero;
             hitTime = 1f;
+
+            rb.AddForce(Vector3.up, ForceMode.Acceleration);
         }
     }
 }

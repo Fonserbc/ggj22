@@ -6,9 +6,6 @@ public class Mouth : MonoBehaviour
 {
     List<Biteable> inRange = new List<Biteable>();
 
-    static Mouth instance;
-
-
     public float grabSpeed = 1f;
     public float rotationGrabSpeedMult = 120f;
     float grabbingTime = 0;
@@ -26,7 +23,6 @@ public class Mouth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
         from = new GameObject("Mouth help from").transform;
         to = new GameObject("Mouth help to").transform;
         to.SetParent(transform);
