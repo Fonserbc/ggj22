@@ -209,7 +209,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -749338713933554755, guid: 72d4f1f668bef45a494f5cf35a453da4, type: 3}
+  - {fileID: 2100000, guid: 6ebf55b30b1f48c4ea5d56791ba4f191, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -292,7 +292,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6541297a3d5b4b24823f0abcd6474db, type: 2}
+  - {fileID: 2100000, guid: 9d032d7428b7287499a25aaa963283db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -657,7 +657,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6541297a3d5b4b24823f0abcd6474db, type: 2}
+  - {fileID: 2100000, guid: 6ebf55b30b1f48c4ea5d56791ba4f191, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -788,7 +788,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6541297a3d5b4b24823f0abcd6474db, type: 2}
+  - {fileID: 2100000, guid: 451d4c14d7ebdd646a13144bfd59d10b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1003,7 +1003,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6541297a3d5b4b24823f0abcd6474db, type: 2}
+  - {fileID: 2100000, guid: a38b4a8ede4a9c4488152ad271b5dec7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1100,7 +1100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6541297a3d5b4b24823f0abcd6474db, type: 2}
+  - {fileID: 2100000, guid: a38b4a8ede4a9c4488152ad271b5dec7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1244,7 +1244,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6541297a3d5b4b24823f0abcd6474db, type: 2}
+  - {fileID: 2100000, guid: 6cefd8e0d83677442831eb6b99000923, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1289,8 +1289,8 @@ Rigidbody:
   m_GameObject: {fileID: 6927179840705939374}
   serializedVersion: 2
   m_Mass: 0.3
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 0.05
+  m_AngularDrag: 0.1
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0

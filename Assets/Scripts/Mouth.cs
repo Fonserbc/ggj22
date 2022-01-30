@@ -92,7 +92,7 @@ public class Mouth : MonoBehaviour
         float timeRotation = Quaternion.Angle(from.rotation, to.rotation) / (grabSpeed * rotationGrabSpeedMult);
         grabbingTimeLeft = Mathf.Max(timeRotation, time);
         grabbingTime = grabbingTimeLeft;
-        b.Grab();
+        b.Bite();
     }
 
     void Release()
