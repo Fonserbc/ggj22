@@ -6041,14 +6041,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Unluckily, Mac fell out of the window while playing VR. And never came
-    back up.
-
-
-    Cheddar was brought to the local shelter where he found a loving
-    family after 3 days.
-
-    Cheddar plays with them every day. '
+  m_text: "Mac was so immersed in VR that he didn't even notice the fall. He only
+    realised what had happened to him when he finally took the headset off as its
+    battery ran out. \r\nIn the meantime, Cheddar was home alone."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
