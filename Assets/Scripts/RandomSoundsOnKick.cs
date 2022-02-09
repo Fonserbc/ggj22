@@ -14,21 +14,39 @@ public class RandomSoundsOnKick : MonoBehaviour
     public bool changePitch = false;
     public Vector2 pitchMinMax = Vector2.one;
 
+    public bool playOnAllCollision = false;
+    public bool velocityAffectsPitch = false;
+    public float otherCollisionVolume = 0.5f;
+
+
+    float startVolume = 1f;
     // Start is called before the first frame update
     void Start()
     {
         if (!source) source = GetComponent<AudioSource>();
+        startVolume = source.volume;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        float magFactor = Random.Range(0, 1);
+        if (velocityAffectsPitch)
+        {
+            float mag = collision.relativeVelocity.magnitude;
+            magFactor = Mathf.Clamp01(mag / 5f);
+        }
+
         if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("Respawn"))
         {
-            PlaySound();
+            PlaySound(startVolume, magFactor);
+        }
+        else if (playOnAllCollision)
+        {
+            PlaySound(startVolume * otherCollisionVolume * magFactor, magFactor);
         }
     }
 
-    void PlaySound()
+    void PlaySound(float volume, float pitchFactor)
     {
         if (!cutPlayingClip && source.isPlaying)
             return;
@@ -60,9 +78,10 @@ public class RandomSoundsOnKick : MonoBehaviour
 
         if (changePitch)
         {
-            source.pitch = Random.Range(pitchMinMax.x, pitchMinMax.y);
+            source.pitch = Mathf.Lerp(pitchMinMax.x, pitchMinMax.y, pitchFactor);
         }
 
+        source.volume = volume;
         lastPlayedClip = chosenClip;
         source.Play();
 
