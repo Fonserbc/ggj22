@@ -47,6 +47,8 @@ public class Movement : MonoBehaviour
     public Transform neck;
     public Transform head;
 
+    public Transform actualHead;
+
     public float headTurningSpeed = 1f;
 
     float headYaw = 0;
@@ -149,14 +151,20 @@ public class Movement : MonoBehaviour
             touchingRight = false;
 
         //
-        float movingFactor = Mathf.Clamp01(Vector3.Dot(front.forward, backRb.velocity) / maxSpeed);
-        if (!Mathf.Approximately(movingFactor, 0) && timeBodyMoving > timeUntilCameraFix && Time.time - lastCameraMovement > timeUntilCameraFix)
-        {
-            if (headPitch < 0) headPitch = Mathf.MoveTowardsAngle(headPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
-            headYaw = Mathf.MoveTowardsAngle(headYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
-            if (neckPitch < 0) neckPitch = Mathf.MoveTowardsAngle(neckPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
-            neckYaw = Mathf.MoveTowardsAngle(neckYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
-        }
+        //float movingFactor = Mathf.Clamp01(Vector3.Dot(front.forward, backRb.velocity) / maxSpeed);
+        //if (!Mathf.Approximately(movingFactor, 0) && timeBodyMoving > timeUntilCameraFix && Time.time - lastCameraMovement > timeUntilCameraFix)
+        //{
+        //    if (headPitch < 0) headPitch = Mathf.MoveTowardsAngle(headPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+        //    headYaw = Mathf.MoveTowardsAngle(headYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+        //    if (neckPitch < 0) neckPitch = Mathf.MoveTowardsAngle(neckPitch, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+        //    neckYaw = Mathf.MoveTowardsAngle(neckYaw, 0, Time.deltaTime * movingFactor * headTurningSpeed * 0.5f);
+        //}
+
+        Vector3 wantedLocalPos = actualHead.parent.InverseTransformPoint(head.position);
+        Quaternion wantedLocalRot = Quaternion.Inverse(actualHead.parent.rotation) * head.rotation;
+
+        actualHead.localPosition = Vector3.MoveTowards(actualHead.localPosition, wantedLocalPos, Time.deltaTime * 10f);
+        actualHead.localRotation = Quaternion.Slerp(actualHead.localRotation, wantedLocalRot, Time.deltaTime * 10f);
     }
 
     private void FixedUpdate()
@@ -404,10 +412,35 @@ public class Movement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        backRb.AddRelativeTorque(Vector3.up * horizontal * turningTorque * backRb.mass, ForceMode.Force);
-        //backRb.AddForceAtPosition(front.right * horizontal * speed, front.position + Vector3.up * 0f, ForceMode.Acceleration);
         backRb.AddForceAtPosition(front.forward * vertical * (vertical > 0? forwardSpeed : forwardSpeed * 0.5f) * backRb.mass, front.position, ForceMode.Force);
         //rb.AddForceAtPosition(transform.right * horizontal * speed, transform.position + Vector3.up * 0.35f, ForceMode.Acceleration);
+
+        if (vertical > 0)
+        {
+            float yaw = headYaw + neckYaw;
+            if (!Mathf.Approximately(0, yaw))
+            {
+                float newYaw = Mathf.MoveTowardsAngle(yaw, 0, Time.fixedDeltaTime * headTurningSpeed * 0.5f);
+                float deltaYaw = newYaw - yaw;
+                //Debug.Log(deltaYaw + " " + (deltaYaw / (Time.fixedDeltaTime * headTurningSpeed)));
+                horizontal = horizontal - deltaYaw/ (Time.fixedDeltaTime * headTurningSpeed * 0.5f);
+
+                if (Mathf.Abs(deltaYaw * 0.5f) > Mathf.Abs(neckYaw))
+                {
+                    deltaYaw += neckYaw;
+                    neckYaw = 0;
+                }
+                else {
+                    neckYaw += deltaYaw * 0.5f;
+                    deltaYaw *= 0.5f;
+                }
+
+                headYaw += deltaYaw;
+            }
+        }
+
+        backRb.AddRelativeTorque(Vector3.up * horizontal * turningTorque * backRb.mass, ForceMode.Force);
+        //backRb.AddForceAtPosition(front.right * horizontal * speed, front.position + Vector3.up * 0f, ForceMode.Acceleration);
 
         float velMagnitude = backRb.velocity.magnitude;
         if (velMagnitude > maxSpeed)
